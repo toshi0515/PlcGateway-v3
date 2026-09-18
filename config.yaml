@@ -1,0 +1,9 @@
+# 設定ファイル
+# MQTT
+mq_host: "127.0.0.1"
+mq_port: 1883
+
+# PLC
+plc_host: "192.168.0.99"
+plc_port: 5062
+read_interval_ms: 500
