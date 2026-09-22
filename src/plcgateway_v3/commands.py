@@ -7,9 +7,9 @@ from .plc import PlcController
 
 
 class CommandDTO(BaseModel, validate_assignment=True):
-    command: str
-    frequency: int | None = Field(default=None, ge=0, le=120)
-    direction: int | None = Field(default=None, ge=0, le=1)
+    Command: str
+    Frequency: int | None = Field(default=None, ge=0, le=120)
+    Direction: int | None = Field(default=None, ge=0, le=1)
 
 
 logger = logging.getLogger(__name__)
@@ -34,22 +34,22 @@ class CommandDispatcher:
             return
 
         # commandに対応する関数を実行
-        action = self.cmd_dict.get(cmd_dto.command)
+        action = self.cmd_dict.get(cmd_dto.Command)
         if action is None:
-            logger.error("未知のコマンドです: %s", cmd_dto.command)
+            logger.error("未知のコマンドです: %s", cmd_dto.Command)
             return
         action(cmd_dto)
 
     def run_cmd(self, cmd_dto: CommandDTO) -> None:
-        if cmd_dto.direction is None:
-            cmd_dto.direction = 0
-        if cmd_dto.frequency is None:
-            cmd_dto.frequency = 30
+        if cmd_dto.Direction is None:
+            cmd_dto.Direction = 0
+        if cmd_dto.Frequency is None:
+            cmd_dto.Frequency = 30
         self.plc_controller.write_motor_run(
-            freq=cmd_dto.frequency, dir=cmd_dto.direction
+            freq=cmd_dto.Frequency, dir=cmd_dto.Direction
         )
         logger.info(
-            "[RUN]コマンド実行: freq=%d, dir=%d", cmd_dto.frequency, cmd_dto.direction
+            "[RUN]コマンド実行: freq=%d, dir=%d", cmd_dto.Frequency, cmd_dto.Direction
         )
 
     def stop_cmd(self, cmd_dto: CommandDTO) -> None:
@@ -57,15 +57,15 @@ class CommandDispatcher:
         logger.info("[STOP]コマンド実行")
 
     def set_freq_cmd(self, cmd_dto: CommandDTO) -> None:
-        if cmd_dto.frequency is None:
+        if cmd_dto.Frequency is None:
             logger.error("周波数設定値がNoneです")
             return
-        self.plc_controller.write_freq(freq=cmd_dto.frequency)
-        logger.info("[SET_FREQ]コマンド実行: freq=%d", cmd_dto.frequency)
+        self.plc_controller.write_freq(freq=cmd_dto.Frequency)
+        logger.info("[SET_FREQ]コマンド実行: freq=%d", cmd_dto.Frequency)
 
     def ser_dir_cmd(self, cmd_dto: CommandDTO) -> None:
-        if cmd_dto.direction is None:
+        if cmd_dto.Direction is None:
             logger.error("回転方向設定値がNoneです")
             return
-        self.plc_controller.write_motor_dir(dir=cmd_dto.direction)
-        logger.info("[SET_DIR]コマンド実行: dir=%d", cmd_dto.direction)
+        self.plc_controller.write_motor_dir(dir=cmd_dto.Direction)
+        logger.info("[SET_DIR]コマンド実行: dir=%d", cmd_dto.Direction)

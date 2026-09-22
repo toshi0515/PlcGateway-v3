@@ -45,9 +45,10 @@ class PlcController:
         with self.lock:
             try:
                 # D1000: ハートビート, D1001: モータ回転フラグ, D1002: モータ回転方向, D1003: インバータ周波数設定,
-                # D1004: モータステータス, D1005: モータ電流測定値, D1006: モータ回転数測定値
-                data = self.plc.batchread_wordunits(headdevice="D1000", readsize=7)
-                _, _, rotate_dir, _, _, current, rotate_speed = data
+                # D1004: モータステータス, D1005: モータ電流測定値, D1006: モータ回転数測定値 [rpm], D1007: モータ回転数測定値 [deg/s],
+                # D1009: モータ電流値[mA]
+                data = self.plc.batchread_wordunits(headdevice="D1000", readsize=10)
+                _, _, rotate_dir, _, _, _, _, rotate_speed, _, current = data
             except Exception as e:
                 logger.error(
                     "PLCデータ読み取りエラー, 読み取りはスキップされます: %s", e
