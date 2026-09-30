@@ -13,7 +13,7 @@ PLCから読み取ったモーターのテレメトリ（回転方向・電流�
 
 ```bash
 # リポジトリを取得
-git clone <https://github.com/toshi0515/PlcGateway-v3.git>
+git clone https://github.com/toshi0515/PlcGateway-v3.git
 cd PlcGateway-v3
 
 # 依存関係をインストール（仮想環境も自動で作成されます）
