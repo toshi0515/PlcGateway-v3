@@ -3,7 +3,7 @@
 三菱PLC（Ethernet/IP, MCプロトコル）とMQTTブローカーを橋渡しするPythonゲートウェイです。
 PLCから読み取ったモーターのテレメトリ（回転方向・電流・回転数）をMQTTへ配信し、MQTT経由で受信したコマンド（RUN/STOP/周波数変更/方向変更）をPLCへ書き込みます。
 
-（READMEはAI生成．コーディングは自作．ただし，コードレビューとデバッグ作業の一部はAIを使いました）
+（READMEはAI生成したものを加筆修正した．設計とコーディングは自作．ただし，コードレビューとデバッグ作業の一部はAIを使いました）
 
 ---
 
@@ -13,8 +13,8 @@ PLCから読み取ったモーターのテレメトリ（回転方向・電流�
 
 ```bash
 # リポジトリを取得
-git clone <このリポジトリのURL>
-cd plcgateway_v3
+git clone <https://github.com/toshi0515/PlcGateway-v3.git>
+cd PlcGateway-v3
 
 # 依存関係をインストール（仮想環境も自動で作成されます）
 uv sync
